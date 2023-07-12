@@ -1,0 +1,8 @@
+# .gitignore
+
+# Ignore the entire venv directory
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
