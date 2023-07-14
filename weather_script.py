@@ -2,9 +2,11 @@
 import json
 from datetime import datetime, timedelta
 import requests
+from config import get_openweathermap_api_key
+
 
 FORECAST_FILE = "weather_forecast.json"
-API_KEY = "034bdbb2d50ed4bc1e25782315b614ea"
+API_KEY = get_openweathermap_api_key()
 CITY = "Hoboken"
 UNITS = "imperial"
 

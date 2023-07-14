@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, render_template, session
 import json
-import os
 import uuid
+from config import get_secret_key, get_google_maps_api_key
+
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your actual secret key
+app.config['SECRET_KEY'] = get_secret_key()
+google_maps_api_key = get_google_maps_api_key()
 
 def append_to_json(file_name, data):
     try:
@@ -25,7 +27,6 @@ def append_to_json(file_name, data):
 def home():
     return render_template('index.html')
 
-
 @app.route('/location', methods=['POST'])
 def update_location():
     user_data = request.get_json()
@@ -34,8 +35,6 @@ def update_location():
     user_data['username'] = session['username']
     append_to_json("data.json", user_data)
     return jsonify({'status': 'success'}), 200
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
