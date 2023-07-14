@@ -34,7 +34,9 @@ def update_location():
         session['username'] = str(uuid.uuid4().hex)  # Use a random session ID
     user_data['username'] = session['username']
     append_to_json("data.json", user_data)
+
     return jsonify({'status': 'success'}), 200
 
-if __name__ == '__main__':
+if __name__ == '__main__':  
     app.run(debug=True)
+    # app.run(host='127.0.0.1',port=5000,debug=True)
