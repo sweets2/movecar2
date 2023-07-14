@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, render_template, session
 import json
 import uuid
-from config import get_secret_key, get_google_maps_api_key
+import os
+from config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = get_secret_key()
-google_maps_api_key = get_google_maps_api_key()
+flask_key = get_secret_key()
+openweather_key = get_openweathermap_api_key()
+google_key = get_google_maps_api_key()
 
 def append_to_json(file_name, data):
     try:
@@ -38,5 +40,5 @@ def update_location():
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':  
-    app.run(debug=True)
-    # app.run(host='127.0.0.1',port=5000,debug=True)
+    # app.run(debug=True)
+    app.run(host='127.0.0.1',port=5000,debug=True)
