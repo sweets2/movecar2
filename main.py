@@ -9,6 +9,7 @@ from config import get_secret_key, get_openweathermap_api_key, get_google_maps_a
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = get_secret_key()
+google_key = get_google_maps_api_key()
 
 def append_to_json(file_name, data):
     try:
@@ -27,6 +28,7 @@ def append_to_json(file_name, data):
 
 @app.route('/')
 def home():
+    return google_key
     return render_template('index.html')
 
 @app.route('/location', methods=['POST'])
