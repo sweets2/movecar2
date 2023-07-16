@@ -3,12 +3,12 @@ import json
 import uuid
 import os
 from config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = get_secret_key()
 
 def append_to_json(file_name, data):
     try:
