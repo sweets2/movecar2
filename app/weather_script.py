@@ -2,7 +2,7 @@
 import json
 from datetime import datetime, timedelta
 import requests
-from config import get_openweathermap_api_key
+from app.config import get_openweathermap_api_key
 
 
 FORECAST_FILE = "weather_forecast.json"

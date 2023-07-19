@@ -1,10 +1,15 @@
-# .gitignore
-
 # Ignore the entire venv directory
 venv/
 
 # Ignore Python cache files
 __pycache__/
 *.pyc
+
 # Ignore keys stored locally
 .env
+
+# Ignore data file
+data.json
+
+# Ingore JavaScript files
+.JS

@@ -1,7 +1,7 @@
+import os
 from flask import Flask, request, jsonify, render_template, session
 import json
 import uuid
-import os
 from config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
 
 
@@ -28,18 +28,22 @@ def append_to_json(file_name, data):
 
 @app.route('/')
 def home():
+    # site = Blueprint('site', __name__, template_folder='templates')
     return render_template('index.html')
 
 @app.route('/location', methods=['POST'])
 def update_location():
+    """This is simulating a front end of an application which would take the user accurate geolocation,
+    store that location, and check it against the street cleaning rules."""
     user_data = request.get_json()
     if 'username' not in session:
         session['username'] = str(uuid.uuid4().hex)  # Use a random session ID
     user_data['username'] = session['username']
+    print(user_data)
     append_to_json("data.json", user_data)
 
     return jsonify({'status': 'success'}), 200
 
-if __name__ == '__main__':  
-    app.run(debug=True)
-    # app.run(host='127.0.0.1',port=5000,debug=True)
+if __name__ == '__main__':
+    # app.run(debug=True)
+    app.run(host='127.0.0.1',port=5000,debug=True)

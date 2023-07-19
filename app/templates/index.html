@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-
     <button onclick="getLocation()">Update location</button>
+    <p><br>"Update Location" is simulating a front end of the application<!-- 
+    --> (which isn't yet created) which will return<!-- 
+    --> the user's address. It currently outputs your actual<!-- 
+    -->  Latitude and Longitude with some accuracy.
     <p id="demo"></p>
 
     <script>
@@ -21,7 +24,7 @@
         var lon = position.coords.longitude;
         x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
         var user_data = {
-            'username': 'user1',  // Replace with actual username if available
+//            'username': 'user1',  // Replace with actual username if available
             'latitude': lat,
             'longitude': lon
         };
@@ -53,6 +56,9 @@
         }
     }
     </script>
-
+    <p><br><br>However, to demonstrate the logic written in the back end<!-- 
+    -->  we will simply assume<!-- 
+    -->  you're parked on Park Ave between<!-- 
+    --> Observer Hwy. to Fourteenth St. in Hoboken, NJ"</p>
 </body>
 </html>
