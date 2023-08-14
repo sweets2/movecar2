@@ -33,9 +33,12 @@ Here's how it works in more detail:
 ## Usage
 
 You will need to create your own API keys from Openweathermap.org, Googlemaps, and create your own Flask secret key in a .env file in the main directory first.
+
 E.g.
 GOOGLE_MAPS_API_KEY='abcdefg123'
+
 OPENWEATHERMAP_API_KEY='abcdefg123
+
 SECRET_KEY='supersecretkey123'
 
 To run the project, use the following command:
