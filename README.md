@@ -8,17 +8,16 @@ https://python27392.pythonanywhere.com/
 
 # The app
 
-This is a web app that helps people park in the City of Hoboken, the 4th most densely populated city in America. Parking in Hoboken is difficult.
-This web app gathers the user's location and tells them the relevant Hoboken street cleaning date/time, the precipitation amount, and whether they should move their car as a result.
-It was created to be useful to anybody who parks in the city of Hoboken and to demonstrate a live deployment with active users.
-It was created to be deployed specifically to PythonAnywhere, but it's simply a Flask app and should be portable to any deployment platform without major issues.
+This is a web app that helps people park in the City of Hoboken, the 4th most densely populated city in America. Parking in Hoboken is difficult. The city of Hoboken has weekly street cleaning on every street and this means all parked cars have to move or they give out tickets! Hoboken is also at sea level and minor thunderstorms causes flooding in certain areas, and major storms flood many areas.
+
+This web app gathers the user's location and tells them the relevant Hoboken street cleaning date/time, the precipitation amount, and whether they should move their car as a result. It was created to be useful to anybody who parks in the city of Hoboken and to demonstrate a live deployment with active users.
 
 Here's how it works in more detail:
-- Using Python, Flask, and  JavaScript/HTML, the user clicks "update location" which gathers the user's current latitude/longitude. If the user is using wifi, the geolocation data won't be accurate enough. That's why the user must confirm their location and cross streets manually.
-- Because this is a app meant for parking a car, each unique user is given a unique session ID and latitude/longitude for each ID. These are stored until the user clicks "update location" again.
--Using Beautiful Soup, it scrapes the City of Hoboken municipal street cleaning rules. Python scripts automatically parse the raw data into usable data.
-- The dropdowns are for the user to input their current street. Later, I will add functionality to combine the geolocation with automatically filling out the dropdowns to display the street cleaning rules.
-- The app also gets the current weather forecast with Openweathermap API, then checks for heavy rain and warns the user they may need to move their car. Hoboken is at sea level so small thunderstorms can easily flood certain pockets of the city on certain blocks in the flood zone.
+- Built with Python, Flask, and  JavaScript/HTML, the user clicks "update location" which gathers the user's current latitude/longitude. If the user is using wifi, the geolocation data won't be accurate enough. That's why the user must confirm their location and cross streets manually with the dropdowns.
+- The dropdowns will output the correct street cleaning day of the week and time. (Later, I will add functionality to combine the geolocation with automatically filling out the dropdowns to display the street cleaning rules.)
+- Because this is a app meant for parking a car, each unique user is given a unique session ID and latitude/longitude for each ID. These are stored until the user clicks "update location" again or clears their cookies.
+- Using Beautiful Soup, it scrapes the City of Hoboken municipal street cleaning rules. Python scripts automatically parse the raw data into usable data.
+- The app also gets the current weather forecast with Openweathermap API, then checks for storms and warns the user they may need to move their car. Hoboken is at sea level so small thunderstorms can easily flood certain pockets of the city on certain blocks in the flood zone.
 
 ## Installation
 
@@ -28,7 +27,6 @@ Here's how it works in more detail:
     ```
 
 2. Install dependencies:
-
     ```bash
     pip install -r requirements.txt
     ```

@@ -13,7 +13,7 @@
     <label for="street">Street:</label>
     <select id="street">
         {% for street in streets %}
-            <option value="{{ street }}">{{ street }}</option>
+            <option value="{{ street }}" {% if street == "Adams St." %}selected{% endif %}>{{ street }}</option>
         {% endfor %}
     </select>
 
@@ -33,11 +33,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
-        // Update sides when a street is selected
+        // Update side when a street is selected
         $('#street').on('change', function() {
             let selected_street = $(this).val();
-            $.getJSON(`/get_sides/${selected_street}`, function(data) {
-                updateDropdown('#side', data.sides);
+            $.getJSON(`/get_side/${selected_street}`, function(data) {
+                updateDropdown('#side', data.side);
             });
         });
 
@@ -47,7 +47,6 @@
             let selected_side = $(this).val();
             $.getJSON(`/get_data/${selected_street}/${selected_side}`, function(data) {
                 updateDropdown('#location', Object.keys(data));
-                $('#days-hours').text(data[$('#location').val()]);
             });
         });
 
@@ -69,7 +68,10 @@
             $(dropdownId).trigger('change');  // Trigger change event
         }
 
+        // Trigger change event for "Street" dropdown after defining the event handlers
+        $('#street').trigger('change');
     });
+
     </script>
 </body>
 </html>

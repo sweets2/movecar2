@@ -1,6 +1,5 @@
 import os
 from flask import Flask, request, jsonify, render_template, session
-from collections import OrderedDict
 import json
 import uuid
 from config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
@@ -36,42 +35,38 @@ user_data_file = os.path.join(main_dir, 'user_data.json')
 
 
 def load_hoboken_rules(filename):
-    """
-    Load the hoboken_rules from a JSON file and preserve the order.
-    """
-    with open(filename, 'r') as file:
-        return json.load(file, object_pairs_hook=OrderedDict)
+    with open(filename, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
 hoboken_rules = load_hoboken_rules(parsed_hoboken_rules_file)
 
 @app.route('/')
 def home():
-    # streets = list({item["Street"] for item in hoboken_rules})
     streets = []
     seen = set()
-    for item in hoboken_rules:
-        if item["Street"] not in seen:
-            streets.append(item["Street"])
-            seen.add(item["Street"])
+    for value in hoboken_rules:
+        if value["Street"] not in seen:
+            streets.append(value["Street"])
+            seen.add(value["Street"])
     return render_template('index.html', streets=streets)
 
-@app.route('/get_sides/<street>')
-def get_sides(street):
-    relevant_data = [item for item in hoboken_rules if item["Street"] == street]
-    sides = list({item["Side"] for item in relevant_data})
-    return jsonify({"sides": sides})
+@app.route('/get_side/<street>', methods=['GET'])
+def get_side(street):
+    relevant_data = [value for value in hoboken_rules if value["Street"] == street]
+    side = list({value["Side"] for value in relevant_data})
+    return jsonify({"side": side})
 
-@app.route('/get_data/<street>/<side>')
+@app.route('/get_data/<street>/<side>', methods=['GET'])
 def get_data(street, side):
-    relevant_data = [item for item in hoboken_rules if item["Street"] == street and item["Side"] == side]
-    locations = {item["Location"]: item["Days & Hours"] for item in relevant_data}
+    relevant_data = [value for value in hoboken_rules if value["Street"] == street and value["Side"] == side]
+    locations = {value["Location"]: value["Days & Hours"] for value in relevant_data}
     return jsonify(locations)
 
-@app.route('/get_rules/<street>/<side>/<location>')
+@app.route('/get_rules/<street>/<side>/<location>', methods=['GET'])
 def get_rules(street, side, location):
-    for item in hoboken_rules:
-        if item["Street"] == street and item["Side"] == side and item["Location"] == location:
-            return jsonify({"days_hours": item["Days & Hours"]})
+    for value in hoboken_rules:
+        if value["Street"] == street and value["Side"] == side and value["Location"] == location:
+            return jsonify({"days_hours": value["Days & Hours"]})
 
     return jsonify({"days_hours": "No rules found for the selected combination."})
 
@@ -88,5 +83,5 @@ def update_location():
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':
-    app.run
-    # app.run(host='127.0.0.1',port=5000,debug=True)
+    # app.run
+    app.run(host='127.0.0.1',port=5000,debug=True)
