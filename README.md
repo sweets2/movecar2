@@ -28,6 +28,7 @@ Here's how it works in more detail:
     ```
 
 2. Install dependencies:
+
     ```bash
     pip install -r requirements.txt
     ```
