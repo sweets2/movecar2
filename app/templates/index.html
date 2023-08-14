@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Info</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Street Cleaning Rules Finder</h1>
+
+    <label for="street">Street:</label>
+    <select id="street">
+        {% for street in streets %}
+            <option value="{{ street }}">{{ street }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="side">Side:</label>
+    <select id="side">
+        <!-- Options populated by JavaScript -->
+    </select>
+
+    <label for="location">Location:</label>
+    <select id="location">
+        <!-- Options populated by JavaScript -->
+    </select>
+
+    <h2>Street Cleaning Rules:</h2>
+    <p id="days-hours"></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Update sides when a street is selected
+        $('#street').on('change', function() {
+            let selected_street = $(this).val();
+            $.getJSON(`/get_sides/${selected_street}`, function(data) {
+                updateDropdown('#side', data.sides);
+            });
+        });
+
+        // Update locations when a side is selected
+        $('#side').on('change', function() {
+            let selected_street = $('#street').val();
+            let selected_side = $(this).val();
+            $.getJSON(`/get_data/${selected_street}/${selected_side}`, function(data) {
+                updateDropdown('#location', Object.keys(data));
+                $('#days-hours').text(data[$('#location').val()]);
+            });
+        });
+
+        // Update days & hours when a location is selected
+        $('#location').on('change', function() {
+            let selected_location = $(this).val();
+            let selected_street = $('#street').val();
+            let selected_side = $('#side').val();
+            $.getJSON(`/get_data/${selected_street}/${selected_side}`, function(data) {
+                $('#days-hours').text(data[selected_location]);
+            });
+        });
+
+        function updateDropdown(dropdownId, values) {
+            $(dropdownId).empty();
+            values.forEach(val => {
+                $(dropdownId).append(new Option(val, val));
+            });
+            $(dropdownId).trigger('change');  // Trigger change event
+        }
+
+    });
+    </script>
+</body>
+</html>
+    
+
 <body>
     <button onclick="getLocation()">Update location</button>
     <p><br>"Update Location" is simulating a front end of the application<!-- 
     --> (which isn't yet created) which will return<!-- 
     --> the user's address. It currently outputs your actual<!-- 
-    -->  Latitude and Longitude with some accuracy.
+    -->  Latitude and Longitude with some accuracy. Once the feature is finished, <!-- 
+    -->  it will autocomplete the dropdowns!
     <p id="demo"></p>
 
     <script>
@@ -56,9 +132,5 @@
         }
     }
     </script>
-    <p><br><br>However, to demonstrate the logic written in the back end<!-- 
-    -->  we will simply assume<!-- 
-    -->  you're parked on Park Ave between<!-- 
-    --> Observer Hwy. to Fourteenth St. in Hoboken, NJ"</p>
 </body>
 </html>

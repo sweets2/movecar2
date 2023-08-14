@@ -1,7 +1,21 @@
+"""Scripts in this file get the current Hoboken municipal street cleaning rules
+as raw data and outputs them as a txt file usingi BeautifulSoup. We will run this 
+periodically (until automated with a job schedule) to make sure rules haven't changed.
+Also checks to see if there are any changes in rules."""
+import os
 import requests
 from bs4 import BeautifulSoup
 
-# IMPORTANT: installation on PythonAnywhere may require this command:
+# Get the absolute path of the current script to output into the "data_raw" folder
+current_script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(current_script_path)
+project_dir = os.path.dirname(script_dir)
+data_dir = os.path.join(project_dir, 'data_raw')
+
+file1 = os.path.join(data_dir, 'current_hoboken_rules_output.txt')
+file2 = os.path.join(data_dir, 'new_hoboken_rules_output.txt')
+
+# Installation of BS4 on PythonAnywhere may require this command:
 # sudo apt-get install python3-bs4
 
 def create_hoboken_street_cleaning_schedule_file():
@@ -12,23 +26,21 @@ def create_hoboken_street_cleaning_schedule_file():
     url = "https://www.hobokennj.gov/resources/street-cleaning-schedule"
 
     try:
-        # Make a request to the website
         response = requests.get(url, timeout=10)  # timeout after 10 seconds
 
-        # Check if request was successful
         response.raise_for_status()
 
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err}")  # An  HTTP error
+        print(f"HTTP error occurred: {http_err}")
 
     except requests.exceptions.ConnectionError as conn_err:
-        print(f"Error connecting: {conn_err}")  # A network problem
+        print(f"Error connecting: {conn_err}")
 
     except requests.exceptions.Timeout as timeout_err:
-        print(f"Timeout error: {timeout_err}")  # The request timed out
+        print(f"Timeout error: {timeout_err}")
 
     except requests.exceptions.RequestException as err:
-        print(f"An error occurred: {err}")  # Other type of error
+        print(f"An error occurred: {err}")
     
     else:
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -44,10 +56,46 @@ def create_hoboken_street_cleaning_schedule_file():
                 for link in links_in_div:
                     table.append(link.text)
 
-        with open('app/data/rawdata/output.txt', 'w') as f:
+        # Write contents to txt file
+        output_path = os.path.join(data_dir, 'new_hoboken_rules_output.txt')
+        with open(output_path, 'w', encoding='UTF-8') as f:
             for div in table:
                 f.write(div + '\n')
 
-    # Add more functionality to check the output differs from
-    # the raw_hoboken_rules.txt file
+
+class FileComparator:
+    def __init__(self, file1, file2):
+        self.file1 = file1
+        self.file2 = file2
+
+    def compare_files(self):
+        """Compares two text files and reports differences."""
+        differences = []
+
+        with open(self.file1, 'r') as f1, open(self.file2, 'r') as f2:
+            lines1 = f1.readlines()
+            lines2 = f2.readlines()
+
+            for i, (line1, line2) in enumerate(zip(lines1, lines2)):
+                if line1 != line2:
+                    differences.append(f"Line {i + 1}:\nFile 1: {line1.strip()}\nFile 2: {line2.strip()}")
+
+            for i in range(len(lines1), len(lines2)):
+                differences.append(f"Line {i + 1} is present in File 2 but not in File 1: {lines2[i].strip()}")
+            for i in range(len(lines2), len(lines1)):
+                differences.append(f"Line {i + 1} is present in File 1 but not in File 2: {lines1[i].strip()}")
+
+        return differences
+
+    def report(self):
+        diffs = self.compare_files()
+        if diffs:
+            output = "\nDifferences found:\n"
+            for diff in diffs:
+                output += ('-' * 40) + "\n" + diff + "\n"
+            return output
+        else:
+            return "The two files are identical."
+
 create_hoboken_street_cleaning_schedule_file()
+print(FileComparator(file1, file2).report())
