@@ -23,7 +23,7 @@ Here's how it works in more detail:
 ## Installation
 
 1. Clone the repository: 
-    `git clone https://github.com/sweets2/movecar2.git`
+    git clone https://github.com/sweets2/movecar2.git
 2. Install dependencies: 
     `pip install -r requirements.txt`
 
