@@ -25,10 +25,12 @@ Here's how it works in more detail:
 1. Clone the repository:
     ```bash
     git clone https://github.com/sweets2/movecar2.git
+    ```
 
 2. Install dependencies:
     ```bash
     pip install -r requirements.txt
+    ```
 
 ## Usage
 
@@ -42,6 +44,7 @@ SECRET_KEY='supersecretkey123'
 To run the project, use the following command:
     ```bash
     python ./app/main.py
+    ```
 
 # Future Updates
 Future updates will include:
