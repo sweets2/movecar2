@@ -36,9 +36,7 @@ You will need to create your own API keys from Openweathermap.org, Googlemaps, a
 
 E.g.
 GOOGLE_MAPS_API_KEY='abcdefg123'
-
 OPENWEATHERMAP_API_KEY='abcdefg123
-
 SECRET_KEY='supersecretkey123'
 
 To run the project, use the following command:
