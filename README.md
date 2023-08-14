@@ -22,8 +22,10 @@ Here's how it works in more detail:
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/sweets2/movecar2.git`
-2. Install dependencies: `pip install -r requirements.txt`
+1. Clone the repository: 
+    `git clone https://github.com/sweets2/movecar2.git`
+2. Install dependencies: 
+    `pip install -r requirements.txt`
 
 ## Usage
 
@@ -33,7 +35,8 @@ GOOGLE_MAPS_API_KEY='abcdefg123'
 OPENWEATHERMAP_API_KEY='abcdefg123
 SECRET_KEY='supersecretkey123'
 
-To run the project, use the following command: `python ./app/main.py`
+To run the project, use the following command: 
+    `python ./app/main.py`
 
 # Future Updates
 Future updates will include:
