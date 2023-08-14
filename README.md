@@ -39,7 +39,8 @@ OPENWEATHERMAP_API_KEY='abcdefg123
 SECRET_KEY='supersecretkey123'
 
 To run the project, use the following command:
-    ```bash python ./app/main.py```
+    ```bash
+    python ./app/main.py```
 
 # Future Updates
 Future updates will include:
