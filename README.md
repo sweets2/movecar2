@@ -40,7 +40,7 @@ SECRET_KEY='supersecretkey123'
 
 To run the project, use the following command:
     ```bash
-    python ./app/main.py```
+    python ./app/main.py
 
 # Future Updates
 Future updates will include:
