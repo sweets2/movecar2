@@ -15,6 +15,7 @@ data_dir = os.path.join(project_dir, 'data')
 parsed_hoboken_rules = os.path.join(data_dir, 'parsed_hoboken_rules.json') # parsed street cleaning data in json
 
 def txt_to_json(txt_file_path, json_file_path):
+    """"""
     keys = []
     data = []
 

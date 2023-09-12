@@ -1,5 +1,5 @@
 """Scripts in this file get the current Hoboken municipal street cleaning rules
-as raw data and outputs them as a txt file usingi BeautifulSoup. We will run this 
+as raw data and outputs them as a txt file using BeautifulSoup. We will run this 
 periodically (until automated with a job schedule) to make sure rules haven't changed.
 Also checks to see if there are any changes in rules."""
 import os
@@ -15,7 +15,7 @@ data_dir = os.path.join(project_dir, 'data_raw')
 file1 = os.path.join(data_dir, 'current_hoboken_rules_output.txt')
 file2 = os.path.join(data_dir, 'new_hoboken_rules_output.txt')
 
-# Installation of BS4 on PythonAnywhere may require this command:
+# Installation of BS4 on PythonAnywhere requires this command:
 # sudo apt-get install python3-bs4
 
 def create_hoboken_street_cleaning_schedule_file():

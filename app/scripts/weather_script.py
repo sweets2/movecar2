@@ -1,21 +1,33 @@
-
+import os
 import json
 from datetime import datetime, timedelta
 import requests
-from app.config import get_openweathermap_api_key
+from config import get_openweathermap_api_key
+
+current_script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(current_script_path)
+main_dir = os.path.dirname(script_dir)
+data_dir = os.path.join(main_dir, 'data')
+weather_json_file = os.path.join(data_dir, 'weather_forecast.json')
 
 
-FORECAST_FILE = "weather_forecast.json"
-API_KEY = get_openweathermap_api_key()
+
+def test_func():
+    return
+
+
+
+
 CITY = "Hoboken"
 UNITS = "imperial"
-
+API_KEY = get_openweathermap_api_key()
+FORECAST_FILE = weather_json_file
 
 def get_weather_forecast():
     """ Simple API request to pull data based on city. Outputs data as JSON file."""
     url = f"http://api.openweathermap.org/data/2.5/forecast?q={CITY}&units={UNITS}&appid={API_KEY}"
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=20)
         data = response.json()
     except requests.exceptions.Timeout:
         print("openweathermap API timed out")
@@ -31,7 +43,7 @@ def check_thunderstorm_forecast():
     with open(FORECAST_FILE, 'r', encoding='utf-8') as file:
         weather_data = json.load(file)
 
-    tomorrow = datetime.now().date() + timedelta(days=1)
+    tomorrow = datetime.now().date() + timedelta(days=1) # Split into a separate functions
     target_date = tomorrow.strftime("%Y-%m-%d")
 
     moderate_rain = ['moderate', 'light','clear']
@@ -49,6 +61,8 @@ def check_thunderstorm_forecast():
             for word in heavy_rain:
                 if word in forecast['weather'][0]['description']:
                     heavy_rain_time.append(forecast["dt_txt"])
-    print(moderate_rain_time)
-    print(heavy_rain_time)
+
     return moderate_rain_time
+
+# get_weather_forecast()
+# check_thunderstorm_forecast()

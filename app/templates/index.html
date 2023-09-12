@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Street Info</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <h1>Street Cleaning Rules Finder</h1>
+    <h1>Should You Move Your Car?</h1>
 
     <label for="street">Street:</label>
     <select id="street">
@@ -27,8 +32,8 @@
         <!-- Options populated by JavaScript -->
     </select>
 
-    <h2>Street Cleaning Rules:</h2>
-    <p id="days-hours"></p>
+    <h2>Move your car at this day and time or you'll get a ticket!</h2>
+    <p id="days-hours" style="color: red; font-weight: bold; font-size: 30px;"></p>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -78,12 +83,13 @@
     
 
 <body>
-    <button onclick="getLocation()">Update location</button>
+    <button onclick="getLocation()">Update my location</button>
     <p><br>"Update Location" is simulating a front end of the application<!-- 
     --> (which isn't yet created) which will return<!-- 
     --> the user's address. It currently outputs your actual<!-- 
-    -->  Latitude and Longitude with some accuracy. Once the feature is finished, <!-- 
-    -->  it will autocomplete the dropdowns!
+    --> Latitude and Longitude with some accuracy. Once the feature is finished, <!-- 
+    --> it will autocomplete the dropdowns and be integrated with<!-- 
+    --> an interactive map overlay to visually see the street!
     <p id="demo"></p>
 
     <script>
