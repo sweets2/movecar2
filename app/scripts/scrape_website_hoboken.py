@@ -2,18 +2,13 @@
 as raw data and outputs them as a txt file using BeautifulSoup. We will run this 
 periodically (until automated with a job schedule) to make sure rules haven't changed.
 Also checks to see if there are any changes in rules."""
-import os
 import requests
 from bs4 import BeautifulSoup
+from app.main import BASE_DIR
 
-# Get the absolute path of the current script to output into the "data_raw" folder
-current_script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(current_script_path)
-project_dir = os.path.dirname(script_dir)
-data_dir = os.path.join(project_dir, 'data_raw')
 
-file1 = os.path.join(data_dir, 'current_hoboken_rules_output.txt')
-file2 = os.path.join(data_dir, 'new_hoboken_rules_output.txt')
+file1 = BASE_DIR / "data_raw" / "current_hoboken_rules_output.txt"
+file2 = BASE_DIR / "data_raw" / "new_hoboken_rules_output.txt"
 
 # Installation of BS4 on PythonAnywhere requires this command:
 # sudo apt-get install python3-bs4
@@ -57,7 +52,7 @@ def create_hoboken_street_cleaning_schedule_file():
                     table.append(link.text)
 
         # Write contents to txt file
-        output_path = os.path.join(data_dir, 'new_hoboken_rules_output.txt')
+        output_path = BASE_DIR / 'data_raw' / 'new_hoboken_rules_output.txt'
         with open(output_path, 'w', encoding='UTF-8') as f:
             for div in table:
                 f.write(div + '\n')
@@ -97,5 +92,5 @@ class FileComparator:
         else:
             return "The two files are identical."
 
-create_hoboken_street_cleaning_schedule_file()
+# create_hoboken_street_cleaning_schedule_file()
 print(FileComparator(file1, file2).report())

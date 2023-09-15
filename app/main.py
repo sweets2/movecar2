@@ -2,9 +2,15 @@ import os
 from flask import Flask, request, jsonify, render_template, session
 import json
 import uuid
-from config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).resolve().parent))
+from app.config import get_secret_key, get_openweathermap_api_key, get_google_maps_api_key
+
 
 app = Flask(__name__)
+
+BASE_DIR = Path(__file__).resolve().parent
 
 app.config['SECRET_KEY'] = get_secret_key()
 google_key = get_google_maps_api_key()

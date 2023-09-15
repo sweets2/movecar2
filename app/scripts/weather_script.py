@@ -2,21 +2,14 @@ import os
 import json
 from datetime import datetime, timedelta
 import requests
-from config import get_openweathermap_api_key
-
-current_script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(current_script_path)
-main_dir = os.path.dirname(script_dir)
-data_dir = os.path.join(main_dir, 'data')
-weather_json_file = os.path.join(data_dir, 'weather_forecast.json')
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from app.main import BASE_DIR
+from app.config import get_openweathermap_api_key
 
 
-
-def test_func():
-    return
-
-
-
+weather_json_file = BASE_DIR / "data" / "weather_forecast.json"
 
 CITY = "Hoboken"
 UNITS = "imperial"
@@ -65,4 +58,4 @@ def check_thunderstorm_forecast():
     return moderate_rain_time
 
 # get_weather_forecast()
-# check_thunderstorm_forecast()
+check_thunderstorm_forecast()
